@@ -7,15 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Clientes {
-
     public Clientes() {}
-    
-    ResultSet rs;
-
+        ResultSet rs;
     public ResultSet busquedaID(String id) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-
+            //cwqc
             Connection conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
             Statement sentencia = conexion.createStatement();
 
