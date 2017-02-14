@@ -10,14 +10,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Accesos {
+public class Accesos{
 
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
     public Accesos() {
     }
 
-    public void insertarAcceso(int idCliente, int tipo) throws ParseException {
+    public void insertarAcceso(int idCliente) throws ParseException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
@@ -25,6 +25,8 @@ public class Accesos {
 
             Date date = new Date();
             Date ultimaFecha;
+            
+            int tipo;
 
             String sqlTipo = String.format("SELECT fechahora, tipo FROM Accesos "
                     + "WHERE id_cliente = %s ORDER BY id_acceso DESC LIMIT 1", idCliente);

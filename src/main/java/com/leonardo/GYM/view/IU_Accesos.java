@@ -1,17 +1,10 @@
 package com.leonardo.GYM.view;
-
-//import com.leonardo.gym.view.BusquedaPane;
-
-import javax.swing.JDialog;
-
-//import com.leonardol.gym.dao.Accesos;
-
+    import com.leonardo.gym.model.ClienteModel;
+    import javax.swing.JDialog;
 public class IU_Accesos extends javax.swing.JFrame {
-
     public IU_Accesos() {
         initComponents();
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -192,10 +185,14 @@ public class IU_Accesos extends javax.swing.JFrame {
             JDialog pneBusqueda = new BusquedaPane(this, rootPaneCheckingEnabled);
             //pneBusqueda.setVisible(true);
             pneBusqueda.show();
-       
-        
+ 
     }//GEN-LAST:event_btnInformeActionPerformed
 
+    public void llenaDatos(ClienteModel cliente){
+        lblId.setText("");
+        lblNombre.setText("");
+        lblApellidos.setText("");
+    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
