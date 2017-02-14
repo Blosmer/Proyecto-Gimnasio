@@ -1,6 +1,6 @@
 package com.leonardo.GYM.view;
 
-    import com.leonardo.GYM.dao.Clientes;
+    import com.leonardo.GYM.dao.ClientesDao;
     import com.leonardo.gym.model.ClienteModel;
     import java.sql.Connection;
     import java.sql.DriverManager;
@@ -17,7 +17,7 @@ public class BusquedaPane extends javax.swing.JDialog {
     DefaultTableModel modelo;
     ResultSet rs;
     
-    Clientes cliente = new Clientes();
+    ClientesDao cliente = new ClientesDao();
     ClienteModel clientModel = new ClienteModel();
     
     IU_Accesos accesos = new IU_Accesos();
@@ -222,18 +222,20 @@ public class BusquedaPane extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBusquedaActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-      
         clientModel.setId_cliente(Integer.parseInt(tabClientes.getValueAt(tabClientes.getSelectedRow(), 0).toString()));
         clientModel.setNombre(tabClientes.getValueAt(tabClientes.getSelectedRow(), 1).toString());
         clientModel.setApellidos(tabClientes.getValueAt(tabClientes.getSelectedRow(), 2).toString());
+        
         //clientModel.setNif(tabClientes.getValueAt(tabClientes.getSelectedRow(), 3).toString());
         //clientModel.setTelefono_movil(Integer.parseInt(tabClientes.getValueAt(tabClientes.getSelectedRow(), 4).toString()));
         //clientModel.setEmail(tabClientes.getValueAt(tabClientes.getSelectedRow(), 5).toString());
         
+        //clientModel.setLONGBLOB();
         accesos.llenaDatos(clientModel);
+        dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    /*private Clientes getCliente(){
+    /*private ClientesDao getCliente(){
         tabClientes.getSelectedColumn();
         return
     }*/

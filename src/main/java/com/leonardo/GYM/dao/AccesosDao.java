@@ -10,11 +10,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Accesos{
+public class AccesosDao{
 
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
-    public Accesos() {
+    public AccesosDao() {
     }
 
     public void insertarAcceso(int idCliente) throws ParseException {

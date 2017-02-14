@@ -53,9 +53,24 @@ public class IU_Accesos extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID_Acceso", "Tipo", "Fecha ", "ID_Cliente"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblAccesos);
 
         imgFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
@@ -144,7 +159,7 @@ public class IU_Accesos extends javax.swing.JFrame {
                     .addComponent(imgFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAcceso)
                     .addComponent(btnInforme))
@@ -174,10 +189,15 @@ public class IU_Accesos extends javax.swing.JFrame {
 
     private void btnAccesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccesoActionPerformed
                             /*Abre DIALOGO de AÑADIR ACCESO*/
-       
+    /*   
     if (dlgNewAccess == null)   
                 dlgNewAccess = new NuevoAcceso(this, true);
-                dlgNewAccess.setVisible(true); 
+                dlgNewAccess.setVisible(true);
+    */
+    //Cogiendo el ID del cliente, del acceso seleccionado.
+    int idClienteTab = Integer.parseInt(tblAccesos.getValueAt(tblAccesos.getSelectedRow(), 3).toString());
+    
+    
     }//GEN-LAST:event_btnAccesoActionPerformed
 
     private void btnInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeActionPerformed
@@ -189,9 +209,10 @@ public class IU_Accesos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInformeActionPerformed
 
     public void llenaDatos(ClienteModel cliente){
-        lblId.setText("");
-        lblNombre.setText("");
-        lblApellidos.setText("");
+        lblId.setText(String.valueOf(cliente.getId_cliente()));
+        lblNombre.setText(cliente.getNombre());
+        lblApellidos.setText(cliente.getApellidos());
+        //lblUltimo.setText();
     }
 
     public static void main(String args[]) {

@@ -1,5 +1,5 @@
 package com.leonardo.GYM.view;
-    import com.leonardo.GYM.dao.Accesos;
+    import com.leonardo.GYM.dao.AccesosDao;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -112,7 +112,7 @@ public class NuevoAcceso extends javax.swing.JDialog {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         
         try {
-            Accesos accesoPrueba = new Accesos();
+            AccesosDao accesoPrueba = new AccesosDao();
             
             String cliente = txtCliente.getText();
             

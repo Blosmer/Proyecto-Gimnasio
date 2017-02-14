@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Clientes {
-    public Clientes() {}
+public class ClientesDao {
+    public ClientesDao() {}
         ResultSet rs;
     public ResultSet busquedaID(String id) {
         try {
