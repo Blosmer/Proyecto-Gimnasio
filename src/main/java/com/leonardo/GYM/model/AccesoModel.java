@@ -48,4 +48,14 @@ public class AccesoModel {
     public void setFechaHora(String fechaHora) {
         this.fechaHora = fechaHora;
     }
+    
+    public String[] toArrayString() {
+        String[] s = new String[3];
+        s[0] = Integer.toString(idAcceso);
+        s[1] = tipo;
+        s[2] = fechaHora;
+        s[3] = Integer.toString(idCliente);
+
+        return s;
+    }
 }
