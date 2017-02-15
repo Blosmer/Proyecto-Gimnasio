@@ -1,5 +1,6 @@
 package com.leonardo.GYM.dao;
 
+import com.leonardo.GYM.model.AccesoModel;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,6 +9,7 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class AccesosDao{
@@ -64,5 +66,38 @@ public class AccesosDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    public ArrayList<AccesoModel> devolverAccesosCliente(int idCliente) {
+        ArrayList<AccesoModel> listaAccesos = new ArrayList<>();
+        AccesoModel acceso;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
+            Statement sentencia = conexion.createStatement();
+            ResultSet rs = sentencia.executeQuery("SELECT * FROM Accesos where id_cliente= " + idCliente);
+
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    acceso = new AccesoModel();
+                    acceso.setIdAcceso(rs.getByte("id_acceso"));
+                    acceso.setTipo(rs.getString("tipo"));
+                    acceso.setFechaHora(rs.getString("fechahora"));
+                    acceso.setIdCliente(rs.getByte("id_cliente"));
+                    listaAccesos.add(acceso);
+                }
+            } else {
+                System.out.println("El cliente no tiene accesos");
+            }
+
+            rs.close();
+            sentencia.close();
+            conexion.close();
+        } catch (ClassNotFoundException cn) {
+            cn.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaAccesos;
     }
 }
