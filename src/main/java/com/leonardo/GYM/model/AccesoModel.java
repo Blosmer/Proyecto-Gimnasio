@@ -10,9 +10,26 @@ package com.leonardo.GYM.model;
  * @author Mac
  */
 public class AccesoModel {
+
     private int idAcceso, idCliente;
-    private String tipo, fechaHora;
-    
+    private String tipo, fechaHora, nombreCliente, apellidosCliente;
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getApellidosCliente() {
+        return apellidosCliente;
+    }
+
+    public void setApellidosCliente(String apellidosCliente) {
+        this.apellidosCliente = apellidosCliente;
+    }
+
     public AccesoModel() {
 
     }
@@ -48,22 +65,42 @@ public class AccesoModel {
     public void setFechaHora(String fechaHora) {
         this.fechaHora = fechaHora;
     }
-    
-    public String[] toArrayString() {
+
+    public String[] toArrayStringClientes() {
         String cadenaTipo;
-        
-        if(tipo.equals("1")){
+
+        if (tipo.equals("1")) {
             cadenaTipo = "Entrada";
-        }else{
+        } else {
             cadenaTipo = "Salida";
         }
-        
+
         String[] s = new String[4];
         s[0] = Integer.toString(idAcceso);
         s[1] = cadenaTipo;
         s[2] = fechaHora;
         s[3] = String.valueOf(idCliente);
 
+        return s;
+    }
+
+    public String[] toArrayStringUltimos() {
+        String cadenaTipo;
+
+        if (tipo.equals("1")) {
+            cadenaTipo = "Entrada";
+        } else {
+            cadenaTipo = "Salida";
+        }
+
+        String[] s = new String[6];
+        s[0] = Integer.toString(idAcceso);
+        s[1] = cadenaTipo;
+        s[2] = fechaHora;
+        s[3] = String.valueOf(idCliente);
+        s[4] = nombreCliente;
+        s[5] = apellidosCliente;
+        
         return s;
     }
 }
