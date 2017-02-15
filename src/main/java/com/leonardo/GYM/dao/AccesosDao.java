@@ -108,7 +108,9 @@ public class AccesosDao{
             Class.forName("com.mysql.jdbc.Driver");
             Connection conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
             Statement sentencia = conexion.createStatement();
-            ResultSet rs = sentencia.executeQuery("SELECT * FROM Accesos  ORDER BY id_acceso DESC LIMIT 20");
+            ResultSet rs = sentencia.executeQuery("SELECT a.*, cl.nombre, cl.apellidos FROM Accesos a left join Clientes cl \n" +
+                                                        "ON a.id_cliente=cl.id_cliente\n" +
+                                                        "ORDER BY id_acceso DESC LIMIT 20");
 
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
