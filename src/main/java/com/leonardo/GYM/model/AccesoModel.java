@@ -50,11 +50,19 @@ public class AccesoModel {
     }
     
     public String[] toArrayString() {
-        String[] s = new String[3];
+        String cadenaTipo;
+        
+        if(tipo.equals("1")){
+            cadenaTipo = "Entrada";
+        }else{
+            cadenaTipo = "Salida";
+        }
+        
+        String[] s = new String[4];
         s[0] = Integer.toString(idAcceso);
-        s[1] = tipo;
+        s[1] = cadenaTipo;
         s[2] = fechaHora;
-        s[3] = Integer.toString(idCliente);
+        s[3] = String.valueOf(idCliente);
 
         return s;
     }

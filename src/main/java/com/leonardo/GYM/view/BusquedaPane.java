@@ -228,8 +228,7 @@ public class BusquedaPane extends javax.swing.JDialog {
         //clientModel.setLONGBLOB();
 
         iuAccesos.llenaDatos(clientModel);
-        
-        //acceso.busquedaAcceso(String.valueOf(clientModel.getId_cliente()));
+        iuAccesos.refrescaTabla();
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 

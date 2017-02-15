@@ -1,9 +1,21 @@
 package com.leonardo.GYM.view;
+import com.leonardo.GYM.dao.AccesosDao;
+import com.leonardo.GYM.model.AccesoModel;
     import com.leonardo.gym.model.ClienteModel;
+import java.util.ArrayList;
     import javax.swing.JDialog;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 public class IU_Accesos extends javax.swing.JFrame {
     public IU_Accesos() {
         initComponents();
+        
+
+        if(lblId.getText().equals("")){
+            refrescaTabla();
+        }
+        
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -23,6 +35,7 @@ public class IU_Accesos extends javax.swing.JFrame {
         lblApellidos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Accesos");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("ID Cliente: ");
@@ -212,6 +225,24 @@ public class IU_Accesos extends javax.swing.JFrame {
         lblApellidos.setText(apellidoCli);
         
         System.out.println("LlenarDatosAcabado");
+    }
+    
+    public void refrescaTabla(){
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.setColumnIdentifiers(new String[]{"ID_Acceso", "Tipo", "Fecha", "ID_Cliente"});
+        
+        TableRowSorter sorter = new TableRowSorter(dtm);
+        tblAccesos.setRowSorter(sorter);
+        AccesosDao ac = new AccesosDao();
+        
+        ArrayList<AccesoModel> arrayAccesos = ac.getAccesosCliente(Integer.parseInt(lblId.getText()));
+        
+        for(AccesoModel accesoIt : arrayAccesos){
+            dtm.addRow(accesoIt.toArrayString());
+            System.out.println(accesoIt.getIdAcceso());
+        }
+        tblAccesos.setModel(dtm);
+        tblAccesos.setEnabled(false);
     }
 
     public static void main(String args[]) {
