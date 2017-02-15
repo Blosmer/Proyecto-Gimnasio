@@ -51,11 +51,13 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                           <Component id="btnAcceso" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btnUltimos" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnBusqueda" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" pref="516" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
@@ -109,6 +111,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnAcceso" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnBusqueda" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnUltimos" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
@@ -211,6 +214,14 @@
           <Properties>
             <Property name="text" type="java.lang.String" value=" "/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnUltimos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ultimos Accesos"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUltimosActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
