@@ -75,11 +75,10 @@ public class AccesoModel {
             cadenaTipo = "Salida";
         }
 
-        String[] s = new String[4];
+        String[] s = new String[3];
         s[0] = Integer.toString(idAcceso);
         s[1] = cadenaTipo;
         s[2] = fechaHora;
-        s[3] = String.valueOf(idCliente);
 
         return s;
     }
