@@ -1,5 +1,6 @@
 package com.leonardo.GYM.view;
 
+import com.leonardo.GYM.dao.AccesosDao;
     import com.leonardo.GYM.dao.ClientesDao;
     import com.leonardo.gym.model.ClienteModel;
     import java.sql.Connection;
@@ -20,11 +21,14 @@ public class BusquedaPane extends javax.swing.JDialog {
     ClientesDao cliente = new ClientesDao();
     ClienteModel clientModel = new ClienteModel();
     
-    IU_Accesos accesos = new IU_Accesos();
+    AccesosDao acceso = new AccesosDao();
+    
+    IU_Accesos iuAccesos;
     
     public BusquedaPane(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        iuAccesos = (IU_Accesos) parent;
         modelo = (DefaultTableModel) tabClientes.getModel();
     }
     @SuppressWarnings("unchecked")
@@ -83,7 +87,7 @@ public class BusquedaPane extends javax.swing.JDialog {
         panClienteLayout.setVerticalGroup(
             panClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panClienteLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(8, 8, 8)
                 .addGroup(panClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(btnBusqueda)
                     .addComponent(lblBusqueda)
@@ -110,12 +114,12 @@ public class BusquedaPane extends javax.swing.JDialog {
             panResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panResultadosLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
         panResultadosLayout.setVerticalGroup(
             panResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panResultadosLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(0, 0, 0)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(36, Short.MAX_VALUE))
         );
@@ -147,32 +151,32 @@ public class BusquedaPane extends javax.swing.JDialog {
                         .addGap(128, 128, 128)
                         .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
+                        .addGap(145, 145, 145)
                         .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
+                        .addGap(57, 57, 57)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(18, 18, 18)
                         .addComponent(panCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(18, 18, 18)
                         .addComponent(panResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(panCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panResultados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar)
-                    .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnAceptar))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -190,7 +194,6 @@ public class BusquedaPane extends javax.swing.JDialog {
             modelo.removeRow(0);
         }
         if (cbxBusqueda.getSelectedItem().equals("ID")) {
-
             rs = cliente.busquedaID(txtBusqueda.getText());
         } else if (cbxBusqueda.getSelectedItem().equals("Nombre")) {
             rs = cliente.busquedaNombre(txtBusqueda.getText());
@@ -208,7 +211,6 @@ public class BusquedaPane extends javax.swing.JDialog {
 
         try {
             while (rs.next()) {
-
                 modelo.addRow(new Object[]{rs.getInt("id_cliente"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("nif"), rs.getInt("telefono_fijo"), rs.getString("email")});
             }
             if (!rs.last()) {
@@ -217,21 +219,17 @@ public class BusquedaPane extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(BusquedaPane.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }//GEN-LAST:event_btnBusquedaActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         clientModel.setId_cliente(Integer.parseInt(tabClientes.getValueAt(tabClientes.getSelectedRow(), 0).toString()));
         clientModel.setNombre(tabClientes.getValueAt(tabClientes.getSelectedRow(), 1).toString());
         clientModel.setApellidos(tabClientes.getValueAt(tabClientes.getSelectedRow(), 2).toString());
-        
-        //clientModel.setNif(tabClientes.getValueAt(tabClientes.getSelectedRow(), 3).toString());
-        //clientModel.setTelefono_movil(Integer.parseInt(tabClientes.getValueAt(tabClientes.getSelectedRow(), 4).toString()));
-        //clientModel.setEmail(tabClientes.getValueAt(tabClientes.getSelectedRow(), 5).toString());
-        
         //clientModel.setLONGBLOB();
-        accesos.llenaDatos(clientModel);
+
+        iuAccesos.llenaDatos(clientModel);
+        
+        //acceso.busquedaAcceso(String.valueOf(clientModel.getId_cliente()));
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -243,34 +241,7 @@ public class BusquedaPane extends javax.swing.JDialog {
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BusquedaPane.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BusquedaPane.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BusquedaPane.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BusquedaPane.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 BusquedaPane busqueda = new BusquedaPane(new javax.swing.JFrame(), true);
