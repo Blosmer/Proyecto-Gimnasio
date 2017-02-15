@@ -119,6 +119,8 @@ public class AccesosDao{
                     acceso.setTipo(rs.getString("tipo"));
                     acceso.setFechaHora(rs.getString("fechahora"));
                     acceso.setIdCliente(rs.getByte("id_cliente"));
+                    acceso.setNombreCliente(rs.getString("cl.nombre"));
+                    acceso.setNombreCliente(rs.getString("cl.apellidos"));
                     listaAccesos.add(acceso);
                 }
             } else {
