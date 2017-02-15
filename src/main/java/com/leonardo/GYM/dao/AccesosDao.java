@@ -68,7 +68,7 @@ public class AccesosDao{
         }
     }
     
-    public ArrayList<AccesoModel> devolverAccesosCliente(int idCliente) {
+    public ArrayList<AccesoModel> getAccesosCliente(int idCliente) {
         ArrayList<AccesoModel> listaAccesos = new ArrayList<>();
         AccesoModel acceso;
         try {
@@ -88,6 +88,39 @@ public class AccesosDao{
                 }
             } else {
                 System.out.println("El cliente no tiene accesos");
+            }
+
+            rs.close();
+            sentencia.close();
+            conexion.close();
+        } catch (ClassNotFoundException cn) {
+            cn.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaAccesos;
+    }
+    
+    public ArrayList<AccesoModel> getUltimosAccesos() {
+        ArrayList<AccesoModel> listaAccesos = new ArrayList<>();
+        AccesoModel acceso;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
+            Statement sentencia = conexion.createStatement();
+            ResultSet rs = sentencia.executeQuery("SELECT * FROM Accesos  ORDER BY id_acceso DESC LIMIT 20");
+
+            if (rs.isBeforeFirst()) {
+                while (rs.next()) {
+                    acceso = new AccesoModel();
+                    acceso.setIdAcceso(rs.getByte("id_acceso"));
+                    acceso.setTipo(rs.getString("tipo"));
+                    acceso.setFechaHora(rs.getString("fechahora"));
+                    acceso.setIdCliente(rs.getByte("id_cliente"));
+                    listaAccesos.add(acceso);
+                }
+            } else {
+                System.out.println("No hay accesos");
             }
 
             rs.close();
