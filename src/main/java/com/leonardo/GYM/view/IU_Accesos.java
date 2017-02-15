@@ -1,22 +1,32 @@
 package com.leonardo.GYM.view;
+
 import com.leonardo.GYM.dao.AccesosDao;
 import com.leonardo.GYM.model.AccesoModel;
-    import com.leonardo.gym.model.ClienteModel;
+import com.leonardo.gym.model.ClienteModel;
+import java.text.ParseException;
 import java.util.ArrayList;
-    import javax.swing.JDialog;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+
 public class IU_Accesos extends javax.swing.JFrame {
+
     public IU_Accesos() {
         initComponents();
-        
 
-        if(lblId.getText().equals("")){
+        //lblImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("D:\\Proyectos\\Proyectos_NetBeans\\0.Proyectos_DI\\Gym_DAMMvn\\src\\main\\resources\\imagenes\\mrIncognito.jpg")));
+        if (!lblId.getText().equals("")) {
             refrescaTabla();
+        } else {
+            refrescarUltimos();
         }
-        
-        
+
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -29,7 +39,8 @@ public class IU_Accesos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAccesos = new javax.swing.JTable();
         imgFoto = new javax.swing.JPanel();
-        btnInforme = new javax.swing.JButton();
+        lblImg = new javax.swing.JLabel();
+        btnBusqueda = new javax.swing.JButton();
         lblId = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblApellidos = new javax.swing.JLabel();
@@ -83,25 +94,25 @@ public class IU_Accesos extends javax.swing.JFrame {
 
         imgFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
 
+        lblImg.setText("Error 420");
+
         javax.swing.GroupLayout imgFotoLayout = new javax.swing.GroupLayout(imgFoto);
         imgFoto.setLayout(imgFotoLayout);
         imgFotoLayout.setHorizontalGroup(
             imgFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 113, Short.MAX_VALUE)
+            .addComponent(lblImg, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
         );
         imgFotoLayout.setVerticalGroup(
             imgFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addComponent(lblImg, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
 
-        btnInforme.setText("Busqueda Cliente");
-        btnInforme.addActionListener(new java.awt.event.ActionListener() {
+        btnBusqueda.setText("Busqueda Cliente");
+        btnBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInformeActionPerformed(evt);
+                btnBusquedaActionPerformed(evt);
             }
         });
-
-        lblId.setText(" ");
 
         lblNombre.setText(" ");
 
@@ -118,19 +129,19 @@ public class IU_Accesos extends javax.swing.JFrame {
                         .addGap(60, 60, 60)
                         .addComponent(btnAcceso)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInforme)
+                        .addComponent(btnBusqueda)
                         .addGap(60, 60, 60))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
-                        .addGap(15, 15, 15)
+                        .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblId)
                             .addComponent(lblNombre)
-                            .addComponent(lblApellidos))
+                            .addComponent(lblApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblId))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(imgFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18))
@@ -148,9 +159,9 @@ public class IU_Accesos extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(lblId))
                         .addGap(15, 15, 15)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -159,12 +170,12 @@ public class IU_Accesos extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(imgFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAcceso)
-                    .addComponent(btnInforme))
+                    .addComponent(btnBusqueda))
                 .addGap(18, 18, 18))
         );
 
@@ -189,62 +200,93 @@ public class IU_Accesos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeActionPerformed
-
+    private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
         JDialog pneBusqueda = new BusquedaPane(this, rootPaneCheckingEnabled);
         //pneBusqueda.setVisible(true);
-
         pneBusqueda.show();
 
-    }//GEN-LAST:event_btnInformeActionPerformed
+    }//GEN-LAST:event_btnBusquedaActionPerformed
 
     private void btnAccesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccesoActionPerformed
         /*Abre DIALOGO de AÑADIR ACCESO*/
-        /*
+ /*
         if (dlgNewAccess == null)
         dlgNewAccess = new NuevoAcceso(this, true);
         dlgNewAccess.setVisible(true);
-        */
+         */
         //Cogiendo el ID del cliente, del acceso seleccionado.
 
         //int idClienteTab = Integer.parseInt(tblAccesos.getValueAt(tblAccesos.getSelectedRow(), 3).toString());
+        
+        if (lblId.getText() == "") {
+            JOptionPane.showMessageDialog(this, "Tienes que buscar un cliente antes de añadir un acceso.", "Cliente no seleccionado", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                AccesosDao accesoPrueba = new AccesosDao();
+
+                String cliente = lblId.getText();
+                accesoPrueba.insertarAcceso(Integer.valueOf(cliente));
+                dispose();
+            } catch (ParseException ex) {
+                Logger.getLogger(NuevoAcceso.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            refrescaTabla();
+        }
 
     }//GEN-LAST:event_btnAccesoActionPerformed
 
-    public void llenaDatos(ClienteModel cliente){
+    public void llenaDatos(ClienteModel cliente) {
         System.out.println(cliente.getId_cliente());
-        
+
         String idCliente = String.valueOf(cliente.getId_cliente());
         String nombreCli = cliente.getNombre();
         String apellidoCli = cliente.getApellidos();
-        
-        System.out.println(idCliente+" - "+nombreCli+" - "+apellidoCli);
-        
+
+        System.out.println(idCliente + " - " + nombreCli + " - " + apellidoCli);
+
         lblId.setText(idCliente);
         lblNombre.setText(nombreCli);
         lblApellidos.setText(apellidoCli);
-        
+
         System.out.println("LlenarDatosAcabado");
     }
-    
-    public void refrescaTabla(){
+
+    public void refrescaTabla() {
         DefaultTableModel dtm = new DefaultTableModel();
-        dtm.setColumnIdentifiers(new String[]{"ID_Acceso", "Tipo", "Fecha", "ID_Cliente"});
-        
+        dtm.setColumnIdentifiers(new String[]{"ID_Acceso", "Tipo", "Fecha"});
+
         TableRowSorter sorter = new TableRowSorter(dtm);
         tblAccesos.setRowSorter(sorter);
         AccesosDao ac = new AccesosDao();
-        
+
         ArrayList<AccesoModel> arrayAccesos = ac.getAccesosCliente(Integer.parseInt(lblId.getText()));
-        
-        for(AccesoModel accesoIt : arrayAccesos){
-            dtm.addRow(accesoIt.toArrayString());
+
+        for (AccesoModel accesoIt : arrayAccesos) {
+            dtm.addRow(accesoIt.toArrayStringClientes());
             System.out.println(accesoIt.getIdAcceso());
         }
         tblAccesos.setModel(dtm);
         tblAccesos.setEnabled(false);
     }
 
+    private void refrescarUltimos() {
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.setColumnIdentifiers(new String[]{"ID_Acceso", "Tipo", "Fecha", "ID_Cliente", "Nombre"});
+
+        TableRowSorter sorter = new TableRowSorter(dtm);
+        tblAccesos.setRowSorter(sorter);
+        AccesosDao ac = new AccesosDao();
+
+        ArrayList<AccesoModel> arrayAccesos = ac.getUltimosAccesos();
+
+        for (AccesoModel accesoIt : arrayAccesos) {
+            dtm.addRow(accesoIt.toArrayStringUltimos());
+            System.out.println(accesoIt.getIdAcceso());
+        }
+        tblAccesos.setModel(dtm);
+        tblAccesos.setEnabled(false);
+    }
+     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -279,7 +321,7 @@ public class IU_Accesos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAcceso;
-    private javax.swing.JButton btnInforme;
+    private javax.swing.JButton btnBusqueda;
     private javax.swing.JPanel imgFoto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
@@ -288,9 +330,9 @@ public class IU_Accesos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblApellidos;
     private javax.swing.JLabel lblId;
+    private javax.swing.JLabel lblImg;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTable tblAccesos;
     // End of variables declaration//GEN-END:variables
     private NuevoAcceso dlgNewAccess;
-
 }

@@ -5,6 +5,8 @@
  */
 package com.leonardo.GYM.model;
 
+import java.util.Vector;
+
 /**
  *
  * @author Mac
@@ -83,7 +85,7 @@ public class AccesoModel {
         return s;
     }
 
-    public String[] toArrayStringUltimos() {
+    public Vector toArrayStringUltimos() {
         String cadenaTipo;
 
         if (tipo.equals("1")) {
@@ -91,7 +93,14 @@ public class AccesoModel {
         } else {
             cadenaTipo = "Salida";
         }
-
+        Vector v = new Vector();
+        v.add(idAcceso);
+        v.add(cadenaTipo);
+        v.add(fechaHora);
+        v.add(String.valueOf(idCliente));
+        v.add(nombreCliente);
+        v.add(apellidosCliente);
+        /*
         String[] s = new String[6];
         s[0] = Integer.toString(idAcceso);
         s[1] = cadenaTipo;
@@ -99,7 +108,8 @@ public class AccesoModel {
         s[3] = String.valueOf(idCliente);
         s[4] = nombreCliente;
         s[5] = apellidosCliente;
+        */
         
-        return s;
+        return v;
     }
 }

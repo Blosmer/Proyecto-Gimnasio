@@ -52,21 +52,21 @@
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                           <Component id="btnAcceso" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnInforme" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnBusqueda" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" pref="497" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="516" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel6" alignment="0" pref="80" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblId" linkSize="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblNombre" linkSize="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblApellidos" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblApellidos" linkSize="3" min="-2" pref="31" max="-2" attributes="0"/>
+                              <Component id="lblId" linkSize="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="imgFoto" min="-2" max="-2" attributes="0"/>
@@ -87,9 +87,9 @@
                               <Component id="lblId" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblNombre" linkSize="4" max="32767" attributes="0"/>
-                              <Component id="jLabel5" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNombre" linkSize="4" alignment="3" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -101,14 +101,14 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Component id="imgFoto" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="34" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jScrollPane1" min="-2" pref="282" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnAcceso" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnInforme" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnBusqueda" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
@@ -175,28 +175,32 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="113" max="32767" attributes="0"/>
+                  <Component id="lblImg" alignment="0" pref="113" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                  <Component id="lblImg" alignment="1" pref="100" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="lblImg">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Error 420"/>
+              </Properties>
+            </Component>
+          </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="btnInforme">
+        <Component class="javax.swing.JButton" name="btnBusqueda">
           <Properties>
             <Property name="text" type="java.lang.String" value="Busqueda Cliente"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInformeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBusquedaActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblId">
-          <Properties>
-            <Property name="text" type="java.lang.String" value=" "/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblNombre">
           <Properties>
