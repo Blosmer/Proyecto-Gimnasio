@@ -11,16 +11,50 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
  * @author Mac
  */
 public class VentaDao {
-    
-    
-    public ArrayList<VentaModel> devolverVentaCliente(int idCliente) {
+
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    public VentaDao() {
+
+    }
+
+    public void insertarVenta(int idCliente, int idArticulo) throws ParseException {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
+            Statement sentencia = conexion.createStatement();
+
+            Date date = new Date();
+
+            String sql = String.format("INSERT INTO Ventas(fecha_hora_venta, id_articulo, id_cliente) VALUES ('%s', %s, %s)",
+                    dateFormat.format(date), idArticulo, idCliente);
+            //System.out.println(sql);
+
+            sentencia.executeUpdate(sql);
+            System.out.println("VENTA INTRODUCIDA");
+            
+            sentencia.close();
+            conexion.close();
+
+        } catch (ClassNotFoundException cn) {
+            cn.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<VentaModel> getVentasCliente(int idCliente) {
         ArrayList<VentaModel> listaVentas = new ArrayList<>();
         VentaModel venta;
         try {
@@ -39,7 +73,7 @@ public class VentaDao {
                     listaVentas.add(venta);
                 }
             } else {
-                System.out.println("El cliente no tiene accesos");
+                System.out.println("Hay ventas de ese cliente");
             }
 
             rs.close();
@@ -52,8 +86,8 @@ public class VentaDao {
         }
         return listaVentas;
     }
-    
-    public ArrayList<VentaModel> devolverVentaArticulo(int idArticulo) {
+
+    public ArrayList<VentaModel> getVentasArticulo(int idArticulo) {
         ArrayList<VentaModel> listaVentas = new ArrayList<>();
         VentaModel venta;
         try {
@@ -72,7 +106,7 @@ public class VentaDao {
                     listaVentas.add(venta);
                 }
             } else {
-                System.out.println("El cliente no tiene accesos");
+                System.out.println("No hay ventas de ese articulo");
             }
 
             rs.close();
@@ -85,5 +119,5 @@ public class VentaDao {
         }
         return listaVentas;
     }
-    
+
 }
