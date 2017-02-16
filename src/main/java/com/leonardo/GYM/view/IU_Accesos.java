@@ -2,6 +2,7 @@ package com.leonardo.GYM.view;
 
 import com.leonardo.GYM.dao.AccesosDao;
 import com.leonardo.GYM.model.AccesoModel;
+//import com.leonardo.GYM.model.ModeloTabla;
 import com.leonardo.gym.model.ClienteModel;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -264,38 +265,46 @@ refrescarUltimos();        // TODO add your handling code here:
     }
 
     public void refrescaTabla() {
-        DefaultTableModel dtm = new DefaultTableModel();
-        dtm.setColumnIdentifiers(new String[]{"ID_Acceso", "Tipo", "Fecha"});
+        
+        ModeloTabla mlt = new ModeloTabla();
+        mlt.setColumnIdentifiers(new String[]{"ID_Acceso", "Tipo", "Fecha"});
+        TableRowSorter sorter = new TableRowSorter(mlt);
+        tblAccesos.setModel(mlt);
+        
 
-        TableRowSorter sorter = new TableRowSorter(dtm);
         tblAccesos.setRowSorter(sorter);
         AccesosDao ac = new AccesosDao();
 
         ArrayList<AccesoModel> arrayAccesos = ac.getAccesosCliente(Integer.parseInt(lblId.getText()));
 
         for (AccesoModel accesoIt : arrayAccesos) {
-            dtm.addRow(accesoIt.toArrayStringClientes());
+            mlt.addRow(accesoIt.toArrayStringClientes());
             System.out.println(accesoIt.getIdAcceso());
         }
-        tblAccesos.setModel(dtm);
-        tblAccesos.setEnabled(false);
+        //tblAccesos.setModel(dtm);
     }
 
     private void refrescarUltimos() {
-        DefaultTableModel dtm = new DefaultTableModel();
-        dtm.setColumnIdentifiers(new String[]{"ID_Acceso", "Tipo", "Fecha", "ID_Cliente", "Nombre"});
+        ModeloTabla mlt = new ModeloTabla();
+        mlt.setColumnIdentifiers(new String[]{"ID_Acceso", "Tipo", "Fecha", "ID_Cliente", "Nombre"});
+        TableRowSorter sorter = new TableRowSorter(mlt);
+        tblAccesos.setModel(mlt);
+        
+       
+        mlt.setColumnIdentifiers(new String[]{"ID_Acceso", "Tipo", "Fecha", "ID_Cliente", "Nombre"});
+       
+        tblAccesos.setModel(mlt);
+        
 
-        TableRowSorter sorter = new TableRowSorter(dtm);
         tblAccesos.setRowSorter(sorter);
         AccesosDao ac = new AccesosDao();
 
         ArrayList<AccesoModel> arrayAccesos = ac.getUltimosAccesos();
 
         for (AccesoModel accesoIt : arrayAccesos) {
-            dtm.addRow(accesoIt.toArrayStringUltimos());
+            mlt.addRow(accesoIt.toArrayStringUltimos());
         }
-        tblAccesos.setModel(dtm);
-        tblAccesos.setEnabled(false);
+        //tblAccesos.setEnabled(false);
     }
      
     public static void main(String args[]) {
@@ -324,4 +333,12 @@ refrescarUltimos();        // TODO add your handling code here:
     private javax.swing.JTable tblAccesos;
     // End of variables declaration//GEN-END:variables
     private NuevoAcceso dlgNewAccess;
+}
+class ModeloTabla extends DefaultTableModel{
+   public boolean isCellEditable (int row, int column){
+       // Aquí devolvemos true o false según queramos que una celda identificada por fila,columna (row,column), sea o no editable
+       /*if (column == 3)
+          return true;*/
+       return false;
+   }
 }
