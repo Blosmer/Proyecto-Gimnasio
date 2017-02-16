@@ -1,6 +1,7 @@
 package com.leonardo.GYM.dao;
 
 import com.leonardo.GYM.model.AccesoModel;
+import com.leonardo.GYM.view.IU_Accesos;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 public class AccesosDao{
 
@@ -54,6 +56,12 @@ public class AccesosDao{
 
             if (date.getTime() - ultimaFecha.getTime() < (10000) && 
                     date.getTime() - ultimaFecha.getTime() > 0) {
+                
+                
+                /*JOptionPane.showMessageDialog(IU_Accesos.class, 
+                        "Ha introducido 2 accesos muy rapido.", 
+                        "Acceso continuo", JOptionPane.ERROR_MESSAGE);*/
+                
                 System.out.println("Esperate 10 segundos para pasar la tarjetita");
             } else {
                 sentencia.executeUpdate(sql);
@@ -120,7 +128,7 @@ public class AccesosDao{
                     acceso.setFechaHora(rs.getString("fechahora"));
                     acceso.setIdCliente(rs.getByte("id_cliente"));
                     acceso.setNombreCliente(rs.getString("cl.nombre"));
-                    acceso.setNombreCliente(rs.getString("cl.apellidos"));
+                    acceso.setApellidosCliente(rs.getString("cl.apellidos"));
                     listaAccesos.add(acceso);
                 }
             } else {

@@ -51,9 +51,9 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                           <Component id="btnAcceso" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
                           <Component id="btnUltimos" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="167" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnBusqueda" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                       </Group>
@@ -69,13 +69,13 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="lblNombre" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblApellidos" linkSize="3" min="-2" pref="31" max="-2" attributes="0"/>
                                       <Component id="lblId" linkSize="3" min="-2" pref="61" max="-2" attributes="0"/>
+                                      <Component id="lblApellidos" linkSize="3" min="-2" pref="170" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="166" max="32767" attributes="0"/>
                                   <Component id="lblTitulo" min="-2" pref="403" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -170,6 +170,9 @@
                   <Table columnCount="0" rowCount="4"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblAccesosMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -232,6 +235,7 @@
         <Component class="javax.swing.JButton" name="btnUltimos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ultimos Accesos"/>
+            <Property name="toolTipText" type="java.lang.String" value="Refrescar utilmos accesos"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUltimosActionPerformed"/>

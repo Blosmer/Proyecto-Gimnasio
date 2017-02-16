@@ -15,10 +15,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 public class IU_Accesos extends javax.swing.JFrame {
-
+    private static boolean ultimos;     
     public IU_Accesos() {
         initComponents();
-
+        
         //lblImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("D:\\Proyectos\\Proyectos_NetBeans\\0.Proyectos_DI\\Gym_DAMMvn\\src\\main\\resources\\imagenes\\mrIncognito.jpg")));
         if (!lblId.getText().equals("")) {
             refrescaTabla();
@@ -77,6 +77,11 @@ public class IU_Accesos extends javax.swing.JFrame {
 
             }
         ));
+        tblAccesos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAccesosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblAccesos);
 
         imgFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
@@ -110,6 +115,7 @@ public class IU_Accesos extends javax.swing.JFrame {
         lblApellidos.setText(" ");
 
         btnUltimos.setText("Ultimos Accesos");
+        btnUltimos.setToolTipText("Refrescar utilmos accesos");
         btnUltimos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUltimosActionPerformed(evt);
@@ -129,9 +135,9 @@ public class IU_Accesos extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addComponent(btnAcceso)
-                        .addGap(30, 30, 30)
+                        .addGap(94, 94, 94)
                         .addComponent(btnUltimos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnBusqueda)
                         .addGap(60, 60, 60))
                     .addComponent(jScrollPane1)
@@ -145,11 +151,11 @@ public class IU_Accesos extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblNombre)
-                                    .addComponent(lblApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(0, 166, Short.MAX_VALUE)
                                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(imgFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -230,16 +236,18 @@ public class IU_Accesos extends javax.swing.JFrame {
         //Cogiendo el ID del cliente, del acceso seleccionado.
 
         //int idClienteTab = Integer.parseInt(tblAccesos.getValueAt(tblAccesos.getSelectedRow(), 3).toString());
-        
         if (lblId.getText() == "") {
-            JOptionPane.showMessageDialog(this, "Tienes que buscar un cliente antes de añadir un acceso.", "Cliente no seleccionado", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                    "Tienes que buscar un cliente antes de añadir un acceso.", 
+                    "Cliente no seleccionado", 
+                    JOptionPane.ERROR_MESSAGE);
         } else {
             try {
                 AccesosDao accesoPrueba = new AccesosDao();
 
                 String cliente = lblId.getText();
                 accesoPrueba.insertarAcceso(Integer.valueOf(cliente));
-                dispose();
+                
             } catch (ParseException ex) {
                 Logger.getLogger(NuevoAcceso.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -249,8 +257,23 @@ public class IU_Accesos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAccesoActionPerformed
 
     private void btnUltimosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimosActionPerformed
-refrescarUltimos();        // TODO add your handling code here:
+        refrescarUltimos();        // TODO add your handling code here:
     }//GEN-LAST:event_btnUltimosActionPerformed
+
+    private void tblAccesosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAccesosMouseClicked
+        
+        if(ultimos){
+        int filaSeleccionada = tblAccesos.getSelectedRow();
+        
+        String idCliTabla = (String) tblAccesos.getModel().getValueAt(filaSeleccionada, 3);
+        String nombreCliTabla = (String) tblAccesos.getModel().getValueAt(filaSeleccionada, 4);
+        String apellidoCliTabla = (String) tblAccesos.getModel().getValueAt(filaSeleccionada, 5);
+        
+        lblId.setText(idCliTabla);
+        lblNombre.setText(nombreCliTabla);
+        lblApellidos.setText(apellidoCliTabla);
+        } 
+    }//GEN-LAST:event_tblAccesosMouseClicked
 
     public void llenaDatos(ClienteModel cliente) {
         System.out.println(cliente.getId_cliente());
@@ -258,19 +281,18 @@ refrescarUltimos();        // TODO add your handling code here:
         String idCliente = String.valueOf(cliente.getId_cliente());
         String nombreCli = cliente.getNombre();
         String apellidoCli = cliente.getApellidos();
-        
+
         lblId.setText(idCliente);
         lblNombre.setText(nombreCli);
         lblApellidos.setText(apellidoCli);
     }
 
     public void refrescaTabla() {
-        
+        ultimos = false;
         ModeloTabla mlt = new ModeloTabla();
         mlt.setColumnIdentifiers(new String[]{"ID_Acceso", "Tipo", "Fecha"});
         TableRowSorter sorter = new TableRowSorter(mlt);
         tblAccesos.setModel(mlt);
-        
 
         tblAccesos.setRowSorter(sorter);
         AccesosDao ac = new AccesosDao();
@@ -279,22 +301,23 @@ refrescarUltimos();        // TODO add your handling code here:
 
         for (AccesoModel accesoIt : arrayAccesos) {
             mlt.addRow(accesoIt.toArrayStringClientes());
-            System.out.println(accesoIt.getIdAcceso());
         }
         //tblAccesos.setModel(dtm);
     }
 
     private void refrescarUltimos() {
+        ultimos = true;
         ModeloTabla mlt = new ModeloTabla();
-        mlt.setColumnIdentifiers(new String[]{"ID_Acceso", "Tipo", "Fecha", "ID_Cliente", "Nombre"});
+        mlt.setColumnIdentifiers(new String[]{
+            "ID_Acceso", 
+            "Tipo", 
+            "Fecha", 
+            "ID_Cliente", 
+            "Nombre",
+            "Apellidos"});
         TableRowSorter sorter = new TableRowSorter(mlt);
+
         tblAccesos.setModel(mlt);
-        
-       
-        mlt.setColumnIdentifiers(new String[]{"ID_Acceso", "Tipo", "Fecha", "ID_Cliente", "Nombre"});
-       
-        tblAccesos.setModel(mlt);
-        
 
         tblAccesos.setRowSorter(sorter);
         AccesosDao ac = new AccesosDao();
@@ -305,8 +328,11 @@ refrescarUltimos();        // TODO add your handling code here:
             mlt.addRow(accesoIt.toArrayStringUltimos());
         }
         //tblAccesos.setEnabled(false);
+        lblId.setText("");
+        lblNombre.setText("");
+        lblApellidos.setText("");
     }
-     
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -334,11 +360,14 @@ refrescarUltimos();        // TODO add your handling code here:
     // End of variables declaration//GEN-END:variables
     private NuevoAcceso dlgNewAccess;
 }
-class ModeloTabla extends DefaultTableModel{
-   public boolean isCellEditable (int row, int column){
-       // Aquí devolvemos true o false según queramos que una celda identificada por fila,columna (row,column), sea o no editable
-       /*if (column == 3)
+
+/*Clase para poder hacer NO EDITABLE las COLUMNAS de un JTable.*/
+class ModeloTabla extends DefaultTableModel {
+
+    public boolean isCellEditable(int row, int column) {
+        // Aquí devolvemos true o false según queramos que una celda identificada por fila,columna (row,column), sea o no editable
+        /*if (column == 3)
           return true;*/
-       return false;
-   }
+        return false;
+    }
 }

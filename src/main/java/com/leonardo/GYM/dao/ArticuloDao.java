@@ -75,5 +75,8 @@ public class ArticuloDao {
         }
         return listaArticulos;
     }
-
+    public int getStock(int producto){
+        int stock = 0;
+        return stock;
+    }
 }

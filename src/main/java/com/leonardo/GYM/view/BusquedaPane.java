@@ -105,7 +105,15 @@ public class BusquedaPane extends javax.swing.JDialog {
             new String [] {
                 "ID", "Nombre", "Apellidos", "NIF", "Teléfono", "Email"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tabClientes);
 
         javax.swing.GroupLayout panResultadosLayout = new javax.swing.GroupLayout(panResultados);
@@ -180,6 +188,7 @@ public class BusquedaPane extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed

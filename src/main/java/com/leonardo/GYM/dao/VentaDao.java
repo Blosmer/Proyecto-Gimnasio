@@ -24,7 +24,7 @@ public class VentaDao {
 
     }
 
-    public void insertarVenta(int idCliente, int idArticulo) throws ParseException {
+    public void setVenta(int idCliente, int idArticulo) throws ParseException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
