@@ -30,15 +30,16 @@ public class VentaDao {
             Connection conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
             Statement sentencia = conexion.createStatement();
 
-            Date date = new Date();
-
-            String sql = String.format("INSERT INTO Ventas(fecha_hora_venta, id_articulo, id_cliente) VALUES ('%s', %s, %s)",
-                    dateFormat.format(date), idArticulo, idCliente);
+            String sql = String.format("INSERT INTO Ventas(fecha_hora_venta, id_articulo, id_cliente) VALUES (now(), %s, %s)",
+                    idArticulo, idCliente);
             //System.out.println(sql);
 
+            String sqlArt = String.format("UPDATE Articulos SET stock = stock -1 WHERE id_articulo = %s and stock > 0", idArticulo);
+
             sentencia.executeUpdate(sql);
+            sentencia.executeUpdate(sqlArt);
             System.out.println("VENTA INTRODUCIDA");
-            
+
             sentencia.close();
             conexion.close();
 
