@@ -6,6 +6,7 @@
 package com.leonardo.GYM.dao;
 
 import com.leonardo.GYM.model.ArticuloModel;
+import com.mysql.jdbc.CommunicationsException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -20,10 +21,12 @@ import java.util.ArrayList;
  */
 public class ArticuloDao {
 
+    private static Connection conexion;
+
     public void insertarArticulo(String descripcion, double pvp, int stock) throws ParseException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
+            conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
             Statement sentencia = conexion.createStatement();
 
             String sql = String.format("INSERT INTO Articulos(descripcion, pvp, stock) VALUES ('%s', %s, %s)", descripcion,
@@ -42,7 +45,7 @@ public class ArticuloDao {
             e.printStackTrace();
         }
     }
-    
+
     public ArrayList<ArticuloModel> getArticulos() {
         ArrayList<ArticuloModel> listaArticulos = new ArrayList<>();
         ArticuloModel articulo;
@@ -57,7 +60,7 @@ public class ArticuloDao {
                     articulo = new ArticuloModel();
                     articulo.setIdArticulo(rs.getByte("id_articulo"));
                     articulo.setDescripcion(rs.getString("descripcion"));
-                    articulo.setPvp(rs.getByte("pvp"));
+                    articulo.setPvp(rs.getDouble("pvp"));
                     articulo.setStock(rs.getByte("stock"));
                     listaArticulos.add(articulo);
                 }
@@ -75,7 +78,8 @@ public class ArticuloDao {
         }
         return listaArticulos;
     }
-    public int getStock(int producto){
+
+    public int getStock(int producto) {
         int stock = 0;
         return stock;
     }

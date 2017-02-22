@@ -47,7 +47,7 @@ public class IU_Accesos extends javax.swing.JFrame {
         btnUltimos = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Accesos");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -218,12 +218,21 @@ public class IU_Accesos extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    
+    @Override
+    public void dispose() {
+        super.dispose();
+         if (menu == null) {
+            menu = new MenuSeleccion();
+            menu.setVisible(true);
+        }
+//To change body of generated methods, choose Tools | Templates.
+    }
 
     private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
         JDialog pneBusqueda = new BusquedaPane(this, rootPaneCheckingEnabled);
         //pneBusqueda.setVisible(true);
         pneBusqueda.show();
-
     }//GEN-LAST:event_btnBusquedaActionPerformed
 
     private void btnAccesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccesoActionPerformed
@@ -359,7 +368,9 @@ public class IU_Accesos extends javax.swing.JFrame {
     private javax.swing.JTable tblAccesos;
     // End of variables declaration//GEN-END:variables
     private NuevoAcceso dlgNewAccess;
+    private MenuSeleccion menu;
 }
+
 
 /*Clase para poder hacer NO EDITABLE las COLUMNAS de un JTable.*/
 class ModeloTabla extends DefaultTableModel {
