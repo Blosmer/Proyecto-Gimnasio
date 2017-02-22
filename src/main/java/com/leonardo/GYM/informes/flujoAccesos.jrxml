@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="accesoPruebas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0ad9204e-bc45-4cc0-9308-0d005ce90c1f">
+	<property name="ireport.zoom" value="1.6105100000000012"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\dilbe\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT count(*) as nºAccesos, hour(fechahora) as hora FROM gimnasio.Accesos WHERE tipo=1 group by hour(fechahora);]]>
+	</queryString>
+	<field name="nºAccesos" class="java.lang.Long"/>
+	<field name="hora" class="java.lang.Integer"/>
+	<group name="Algo">
+		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+		<groupHeader>
+			<band height="123">
+				<subreport>
+					<reportElement x="-1" y="10" width="200" height="100" uuid="b9f412b3-d3b1-4df9-97dd-646b13f0c80c"/>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "accesoHoras.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="-21" width="597" height="67" backcolor="#CCCCFF" uuid="4028b461-18e5-4018-8329-77710fd853e9"/>
+				<textField pattern="dd/MM/yyyy HH.mm.ss">
+					<reportElement x="120" y="47" width="100" height="20" uuid="432fff27-731e-4097-831c-5a2b4b8992ea"/>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="25" y="47" width="95" height="20" uuid="3a35b526-7dfe-4759-bfe3-ca8ffb38316e"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Fecha del Informe:  ]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="66" width="597" height="1" uuid="c4c58c00-c082-4b75-9174-f85a7ed41723"/>
+				</line>
+				<staticText>
+					<reportElement x="418" y="15" width="158" height="32" uuid="d88a4f8d-d5fd-4b18-8dd8-9e8c7f975854"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[FLUJO ACCESOS]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="110">
+			<image>
+				<reportElement x="331" y="0" width="245" height="108" uuid="004fdc51-cb07-4650-b551-5a12f21624d6"/>
+				<imageExpression><![CDATA["C:\\Users\\dilbe\\Downloads\\LogoAcesos.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<summary>
+		<band height="122" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="13" width="200" height="100" uuid="feb24875-4d9a-4c95-afac-52b8257c40db"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "accesoDiaSemana.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>
