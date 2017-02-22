@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InformeVentas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f8cadce-3839-42f1-bc72-c178e95747e8">
+	<property name="ireport.zoom" value="1.6105100000000039"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idCliente" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     Ventas.`id_venta` AS Ventas_id_venta,
+     Ventas.`fecha_hora_venta` AS Ventas_fecha_hora_venta,
+     Ventas.`importe` AS Ventas_importe,
+     Ventas.`id_articulo` AS Ventas_id_articulo,
+     Ventas.`id_cliente` AS Ventas_id_cliente,
+     Articulos.`id_articulo` AS Articulos_id_articulo,
+     Articulos.`descripcion` AS Articulos_descripcion,
+     Articulos.`pvp` AS Articulos_pvp,
+     Articulos.`stock` AS Articulos_stock,
+     Clientes.`id_cliente` AS Clientes_id_cliente,
+     Clientes.`nombre` AS Clientes_nombre,
+     Clientes.`apellidos` AS Clientes_apellidos,
+     Clientes.`nif` AS Clientes_nif,
+     Clientes.`localidad` AS Clientes_localidad,
+     Clientes.`domicilio` AS Clientes_domicilio,
+     Clientes.`cp` AS Clientes_cp,
+     Clientes.`genero` AS Clientes_genero,
+     Clientes.`fecha_nacimiento` AS Clientes_fecha_nacimiento,
+     Clientes.`telefono_fijo` AS Clientes_telefono_fijo,
+     Clientes.`telefono_movil` AS Clientes_telefono_movil,
+     Clientes.`email` AS Clientes_email,
+     Clientes.`imagen` AS Clientes_imagen,
+     Clientes.`observaciones` AS Clientes_observaciones
+FROM
+     `Articulos` Articulos INNER JOIN `Ventas` Ventas ON Articulos.`id_articulo` = Ventas.`id_articulo`
+     INNER JOIN `Clientes` Clientes ON Ventas.`id_cliente` = Clientes.`id_cliente`
+WHERE
+     Clientes.`id_cliente` = $P{idCliente}]]>
+	</queryString>
+	<field name="Ventas_id_venta" class="java.lang.Long"/>
+	<field name="Ventas_fecha_hora_venta" class="java.sql.Timestamp"/>
+	<field name="Ventas_importe" class="java.lang.Double"/>
+	<field name="Ventas_id_articulo" class="java.lang.Long"/>
+	<field name="Ventas_id_cliente" class="java.lang.Long"/>
+	<field name="Articulos_id_articulo" class="java.lang.Long"/>
+	<field name="Articulos_descripcion" class="java.lang.String"/>
+	<field name="Articulos_pvp" class="java.lang.Double"/>
+	<field name="Articulos_stock" class="java.lang.Long"/>
+	<field name="Clientes_id_cliente" class="java.lang.Long"/>
+	<field name="Clientes_nombre" class="java.lang.String"/>
+	<field name="Clientes_apellidos" class="java.lang.String"/>
+	<field name="Clientes_nif" class="java.lang.String"/>
+	<field name="Clientes_localidad" class="java.lang.String"/>
+	<field name="Clientes_domicilio" class="java.lang.String"/>
+	<field name="Clientes_cp" class="java.lang.String"/>
+	<field name="Clientes_genero" class="java.lang.String"/>
+	<field name="Clientes_fecha_nacimiento" class="java.sql.Date"/>
+	<field name="Clientes_telefono_fijo" class="java.lang.Integer"/>
+	<field name="Clientes_telefono_movil" class="java.lang.Integer"/>
+	<field name="Clientes_email" class="java.lang.String"/>
+	<field name="Clientes_imagen" class="java.lang.Object"/>
+	<field name="Clientes_observaciones" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="24" y="40" width="41" height="20" uuid="b23eb4e5-2488-4cf6-a95a-7aac19b71738"/>
+				<text><![CDATA[ID Venta]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="60" width="555" height="1" uuid="d8aeec54-09ee-4b9b-a0d0-ba8d244486ff"/>
+				<graphicElement>
+					<pen lineWidth="1.75"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="107" y="41" width="54" height="20" uuid="75dc191b-4b57-40ce-aa46-98607c08815d"/>
+				<text><![CDATA[ID Artículo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="416" y="40" width="66" height="20" uuid="a9805038-295f-4c11-9487-a93108ba4666"/>
+				<text><![CDATA[Importe Venta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="40" width="75" height="20" uuid="e3c566aa-a53d-4acd-aaad-dffae091a0f3"/>
+				<text><![CDATA[Fecha Venta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="41" width="76" height="20" uuid="56332a1e-7514-4670-b128-88dfd5cb004d"/>
+				<text><![CDATA[Nombre Artículo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="24" y="9" width="41" height="20" uuid="7824017c-4c92-4c80-a27b-514c813f1bd4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Ventas_id_venta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="10" width="54" height="20" uuid="ca09fcfe-4d75-4c62-ae65-20fabdcfca84"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Articulos_id_articulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="416" y="13" width="198" height="20" uuid="56a2e08f-d698-401e-bed4-dff40b914f87"/>
+				<textFieldExpression><![CDATA[$F{Ventas_importe}+" €"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="324" y="10" width="75" height="20" uuid="f137fc38-24b2-4aae-9376-c3f5eb065dfb"/>
+				<textFieldExpression><![CDATA[$F{Ventas_fecha_hora_venta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="11" width="76" height="20" uuid="7f5bfa24-d6ef-4ffa-b336-8e84b3e10429"/>
+				<textFieldExpression><![CDATA[$F{Articulos_descripcion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,36 +1,47 @@
 package com.leonardo.GYM.view;
 
 import com.leonardo.GYM.dao.AccesosDao;
-    import com.leonardo.GYM.dao.ClientesDao;
-    import com.leonardo.gym.model.ClienteModel;
-    import java.sql.Connection;
-    import java.sql.DriverManager;
-    import java.sql.ResultSet;
-    import java.sql.SQLException;
-    import java.sql.Statement;
-    import java.util.logging.Level;
-    import java.util.logging.Logger;
-    import javax.swing.JOptionPane;
-    import javax.swing.table.DefaultTableModel;
+
+import com.leonardo.GYM.dao.ClientesDao;
+import com.leonardo.gym.model.ClienteModel;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class BusquedaPane extends javax.swing.JDialog {
 
     DefaultTableModel modelo;
     ResultSet rs;
-    
+
     ClientesDao cliente = new ClientesDao();
     ClienteModel clientModel = new ClienteModel();
-    
+
     AccesosDao acceso = new AccesosDao();
-    
+
     IU_Accesos iuAccesos;
-    
-    public BusquedaPane(java.awt.Frame parent, boolean modal) {
+    IU_Expendedora iuExpendedora;
+    String tipoFrame;
+
+    public BusquedaPane(java.awt.Frame parent, boolean modal, String tipo) {
         super(parent, modal);
         initComponents();
-        iuAccesos = (IU_Accesos) parent;
+
+        if (tipo.equals("accesos")) {
+            tipoFrame = "accesos";
+            iuAccesos = (IU_Accesos) parent;
+        } else if (tipo.equals("maquina")) {
+            tipoFrame = "maquina";
+            iuExpendedora = (IU_Expendedora) parent;
+        }
         modelo = (DefaultTableModel) tabClientes.getModel();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -192,8 +203,8 @@ public class BusquedaPane extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
-        
-        
+
+
     }//GEN-LAST:event_txtBusquedaActionPerformed
 
     private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
@@ -231,13 +242,17 @@ public class BusquedaPane extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBusquedaActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        clientModel.setId_cliente(Integer.parseInt(tabClientes.getValueAt(tabClientes.getSelectedRow(), 0).toString()));
-        clientModel.setNombre(tabClientes.getValueAt(tabClientes.getSelectedRow(), 1).toString());
-        clientModel.setApellidos(tabClientes.getValueAt(tabClientes.getSelectedRow(), 2).toString());
-        //clientModel.setLONGBLOB();
-
-        iuAccesos.llenaDatos(clientModel);
-        iuAccesos.refrescaTabla();
+            
+            clientModel.setId_cliente(Integer.parseInt(tabClientes.getValueAt(tabClientes.getSelectedRow(), 0).toString()));
+            clientModel.setNombre(tabClientes.getValueAt(tabClientes.getSelectedRow(), 1).toString());
+            clientModel.setApellidos(tabClientes.getValueAt(tabClientes.getSelectedRow(), 2).toString());
+            
+        if (tipoFrame.equals("accesos")) {       
+            iuAccesos.llenaDatos(clientModel);
+            iuAccesos.refrescaTabla();
+        }else if(tipoFrame.equals("maquina")){          
+            iuExpendedora.llenaDatos(clientModel);
+        }
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -252,7 +267,7 @@ public class BusquedaPane extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                BusquedaPane busqueda = new BusquedaPane(new javax.swing.JFrame(), true);
+                BusquedaPane busqueda = new BusquedaPane(new javax.swing.JFrame(), true, "");
                 busqueda.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
