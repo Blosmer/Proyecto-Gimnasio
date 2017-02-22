@@ -4,12 +4,24 @@ import com.leonardo.GYM.dao.ArticuloDao;
 import com.leonardo.GYM.dao.VentaDao;
 import com.leonardo.GYM.model.ArticuloModel;
 import com.leonardo.gym.model.ClienteModel;
+import com.mysql.jdbc.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class IU_Expendedora extends javax.swing.JFrame {
 
@@ -18,18 +30,18 @@ public class IU_Expendedora extends javax.swing.JFrame {
 
     private static final String siStock = "Este producto cuesta: ";
     private static final String noStock = "No queda stock de este producto.";
-    
+
     private static boolean disponible = false;
 
     private static ArrayList<ArticuloModel> arrayArticulos;
 
     public IU_Expendedora() {
         initComponents();
-        
+
         lblId.setText("");
         lblUsuario.setText("");
         lblNombre.setText("");
-        
+
         cargarArrayArticulos();
     }
 
@@ -58,6 +70,7 @@ public class IU_Expendedora extends javax.swing.JFrame {
         lblUsuario = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblId = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Máquina Expendedora");
@@ -154,10 +167,7 @@ public class IU_Expendedora extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTitulo)
-                .addContainerGap())
+            .addComponent(lblTitulo, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -206,48 +216,60 @@ public class IU_Expendedora extends javax.swing.JFrame {
 
         lblId.setText("1");
 
+        jButton1.setText("Imprimir Informe");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(btnComprar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCancelar))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(btnComprar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnMacdonal, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(btnBoteProtes, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(btnBurguer, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAgua, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(btnProhibido, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(btnKingston, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnNukacola, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(btnFanta, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(btnCerveza, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(3, 3, 3)
+                                        .addComponent(lblId))
+                                    .addComponent(lblNombre)))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnMacdonal, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
-                        .addComponent(btnBoteProtes, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
-                        .addComponent(btnBurguer, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAgua, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
-                        .addComponent(btnProhibido, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnKingston, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnNukacola, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
-                        .addComponent(btnFanta, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCerveza, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(lblId))
-                            .addComponent(lblNombre)))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(71, 71, 71)
+                        .addComponent(jButton1)))
+                .addGap(0, 18, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCancelar, btnComprar});
@@ -255,8 +277,9 @@ public class IU_Expendedora extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -273,7 +296,7 @@ public class IU_Expendedora extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnFanta, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnNukacola, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnProhibido, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,6 +311,8 @@ public class IU_Expendedora extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnComprar)
                     .addComponent(btnCancelar))
+                .addGap(8, 8, 8)
+                .addComponent(jButton1)
                 .addGap(18, 18, 18))
         );
 
@@ -300,7 +325,7 @@ public class IU_Expendedora extends javax.swing.JFrame {
     private void cargarArrayArticulos() {
         lblString2.setText("");
         lblString3.setText("");
-       
+
         ArticuloDao art = new ArticuloDao();
         arrayArticulos = art.getArticulos();
         btnComprar.setEnabled(false);
@@ -351,13 +376,13 @@ public class IU_Expendedora extends javax.swing.JFrame {
         } else {
             VentaDao venta = new VentaDao();
             try {
-                venta.setVenta(Integer.parseInt(lblId.getText()), idArticulo+1);
-                
-                JOptionPane.showMessageDialog(this, "El cliente ha comprado: "+nombreArticulo, "¡Compra realizada!", 0);
-                
+                venta.setVenta(Integer.parseInt(lblId.getText()), idArticulo + 1);
+
+                JOptionPane.showMessageDialog(this, "El cliente ha comprado: " + nombreArticulo, "¡Compra realizada!", 0);
+
             } catch (ParseException ex) {
                 Logger.getLogger(IU_Expendedora.class.getName()).log(Level.SEVERE, null, ex);
-            }      
+            }
         }
         cargarArrayArticulos();
     }//GEN-LAST:event_btnComprarActionPerformed
@@ -391,8 +416,41 @@ public class IU_Expendedora extends javax.swing.JFrame {
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
         JDialog pneBusqueda = new BusquedaPane(this, rootPaneCheckingEnabled, "maquina");
         //pneBusqueda.setVisible(true);
-        pneBusqueda.show();       
+        pneBusqueda.show();
     }//GEN-LAST:event_btnClienteActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String rutaPlantilla = "./src/main/java/com/leonardo/GYM/informes/InformeVentas.jrxml";
+
+        Map parametros = new HashMap();
+
+        JasperReport reporte;
+
+        if (lblId.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Busca un cliente antes de imprimir.", "Cliente no buscado", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conexion = (Connection) DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
+
+                parametros.put("idCliente", Integer.parseInt(lblId.getText()));
+
+                reporte = (JasperReport) JasperCompileManager.compileReport(rutaPlantilla);
+
+                JasperPrint miInforme = JasperFillManager.fillReport(reporte, parametros, conexion);
+
+                JasperViewer.viewReport(miInforme, false);
+
+            } catch (ClassNotFoundException e) {
+                System.out.print("Error driver");
+            } catch (SQLException e) {
+                System.out.print("Error sentencia SQL");
+            } catch (JRException ex) {
+                Logger.getLogger(IU_Accesos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     @Override
     public void dispose() {
@@ -402,18 +460,19 @@ public class IU_Expendedora extends javax.swing.JFrame {
             menu.setVisible(true);
         }
     }
-    
+
     public void llenaDatos(ClienteModel cliente) {
-        
+
         String idCliente = String.valueOf(cliente.getId_cliente());
         String nombreCli = cliente.getNombre();
         String apellidoCli = cliente.getApellidos();
 
         lblUsuario.setText("Usuario actual: ");
         lblId.setText(idCliente);
-        lblNombre.setText(nombreCli+" "+apellidoCli); 
+        lblNombre.setText(nombreCli + " " + apellidoCli);
+        jButton1.setEnabled(disponible);
     }
-    
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -434,6 +493,7 @@ public class IU_Expendedora extends javax.swing.JFrame {
     private javax.swing.JButton btnMacdonal;
     private javax.swing.JButton btnNukacola;
     private javax.swing.JButton btnProhibido;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblId;

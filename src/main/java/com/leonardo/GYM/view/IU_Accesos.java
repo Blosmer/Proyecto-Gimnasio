@@ -310,9 +310,7 @@ public class IU_Accesos extends javax.swing.JFrame {
 
     private void btnInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeActionPerformed
         String rutaPlantilla = "./src/main/java/com/leonardo/GYM/informes/AccesosCliente.jrxml";
-        
-        String reportPDF = "./src/informes/accesos/informeFacturas.pdf";
-
+       
         Map parametros = new HashMap();
 
         JasperReport reporte;
@@ -327,8 +325,6 @@ public class IU_Accesos extends javax.swing.JFrame {
             JasperPrint miInforme = JasperFillManager.fillReport(reporte, parametros, conexion);
 
             JasperViewer.viewReport(miInforme, false);
-            
-            JasperExportManager.exportReportToPdfFile(miInforme, reportPDF);
 
         } catch (ClassNotFoundException e) {
             System.out.print("Error driver");
