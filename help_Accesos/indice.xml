@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE index
+    PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN" "http://java.sun.com/products/javahelp/index_1_0.dtd">
+<index version="1.0">
+    <indexitem text="Ejemplo JavaHelp" target="aplicacion">
+        <indexitem text="Descargar libreria" target="descargar_libreria"/>
+        <indexitem text="P�ginas HTML" target="paginas_html"/>
+        <indexitem text="Fichero mapa" target="fichero_mapa"/>
+        <indexitem text="Tabla de contenidos" target="tabla_contenidos"/>
+        <indexitem text="Fichero �ndice" target="fichero_indice"/>
+        <indexitem text="B�squeda" target="busqueda"/>
+        <indexitem text="Fichero principal" target="fichero_principal"/>
+        <indexitem text="C�digo java a a�adir" target="codigo_java"/>
+</index>
