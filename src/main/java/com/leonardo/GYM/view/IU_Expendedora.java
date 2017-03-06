@@ -5,6 +5,9 @@ import com.leonardo.GYM.dao.VentaDao;
 import com.leonardo.GYM.model.ArticuloModel;
 import com.leonardo.gym.model.ClienteModel;
 import com.mysql.jdbc.Connection;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -13,6 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
@@ -31,13 +37,19 @@ public class IU_Expendedora extends javax.swing.JFrame {
     private static final String siStock = "Este producto cuesta: ";
     private static final String noStock = "No queda stock de este producto.";
 
-    private static boolean disponible = false;
+    URL hsURL;
+    HelpSet helpset;
+    String targetDefecto = "introduccion", 
+           hs1 = "./help_Expendedora/help_set.hs";
+    File fichero = new File(hs1);
+
 
     private static ArrayList<ArticuloModel> arrayArticulos;
 
     public IU_Expendedora() {
         initComponents();
-
+        ayuda();
+        
         lblId.setText("");
         lblUsuario.setText("");
         lblNombre.setText("");
@@ -70,8 +82,8 @@ public class IU_Expendedora extends javax.swing.JFrame {
         lblUsuario = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblId = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnImprimir = new javax.swing.JButton();
+        btnAyuda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Máquina Expendedora");
@@ -217,14 +229,14 @@ public class IU_Expendedora extends javax.swing.JFrame {
 
         lblId.setText("1");
 
-        jButton1.setText("Imprimir Informe");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnImprimir.setText("Imprimir Informe");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnImprimirActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ayuda20.png"))); // NOI18N
+        btnAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ayuda20.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -273,9 +285,9 @@ public class IU_Expendedora extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnCancelar))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
         );
 
@@ -322,11 +334,11 @@ public class IU_Expendedora extends javax.swing.JFrame {
                             .addComponent(btnComprar)
                             .addComponent(btnCancelar))
                         .addGap(8, 8, 8)
-                        .addComponent(jButton1)
+                        .addComponent(btnImprimir)
                         .addGap(22, 22, 22))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btnAyuda)
                         .addContainerGap())))
         );
 
@@ -335,7 +347,29 @@ public class IU_Expendedora extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    
+    public void ayuda(){
+        try {
+            hsURL = fichero.toURI().toURL();
+            
+            try {
+                // Crea el HelpSet y el HelpBroker
+                helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+                HelpBroker hb = helpset.createHelpBroker();
+                // Pone ayuda al botón y a F1 en la ventana.
+               
+                hb.enableHelpOnButton(btnAyuda, targetDefecto, helpset);
+                //F1
+                hb.enableHelpKey(this.getContentPane(), targetDefecto, helpset);
 
+            } catch (HelpSetException ex) {
+                Logger.getLogger(IU_Accesos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(IU_Accesos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void cargarArrayArticulos() {
         lblString2.setText("");
         lblString3.setText("");
@@ -360,7 +394,6 @@ public class IU_Expendedora extends javax.swing.JFrame {
         } else {
             lblString3.setText(siStock + arrayArticulos.get(idArticulo).getPvp() + " €");
             btnComprar.setEnabled(true);
-            disponible = true;
         }
     }
     private void btnFantaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFantaActionPerformed
@@ -433,7 +466,7 @@ public class IU_Expendedora extends javax.swing.JFrame {
         pneBusqueda.show();
     }//GEN-LAST:event_btnClienteActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         String rutaPlantilla = "./src/main/java/com/leonardo/GYM/informes/InformeVentas.jrxml";
 
         Map parametros = new HashMap();
@@ -464,7 +497,7 @@ public class IU_Expendedora extends javax.swing.JFrame {
             }
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnImprimirActionPerformed
 
     @Override
     public void dispose() {
@@ -476,7 +509,6 @@ public class IU_Expendedora extends javax.swing.JFrame {
     }
 
     public void llenaDatos(ClienteModel cliente) {
-
         String idCliente = String.valueOf(cliente.getId_cliente());
         String nombreCli = cliente.getNombre();
         String apellidoCli = cliente.getApellidos();
@@ -484,7 +516,7 @@ public class IU_Expendedora extends javax.swing.JFrame {
         lblUsuario.setText("Usuario actual: ");
         lblId.setText(idCliente);
         lblNombre.setText(nombreCli + " " + apellidoCli);
-        jButton1.setEnabled(disponible);
+       // btnImprimir.setEnabled(disponible);
     }
 
     public static void main(String args[]) {
@@ -496,6 +528,7 @@ public class IU_Expendedora extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgua;
+    private javax.swing.JButton btnAyuda;
     private javax.swing.JButton btnBoteProtes;
     private javax.swing.JButton btnBurguer;
     private javax.swing.JButton btnCancelar;
@@ -503,12 +536,11 @@ public class IU_Expendedora extends javax.swing.JFrame {
     private javax.swing.JButton btnCliente;
     private javax.swing.JButton btnComprar;
     private javax.swing.JButton btnFanta;
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnKingston;
     private javax.swing.JButton btnMacdonal;
     private javax.swing.JButton btnNukacola;
     private javax.swing.JButton btnProhibido;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblId;

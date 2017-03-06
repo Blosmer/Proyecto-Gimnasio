@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--TABLA DE CONTENIDOS-->
+<toc version="1.0">
+	<tocitem text="Ayuda de Accesos" target="introduccion">
+	<tocitem text="Comprar artículo" target="comprar"/>
+	</tocitem>
+</toc>

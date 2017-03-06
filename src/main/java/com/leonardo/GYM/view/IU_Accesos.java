@@ -30,12 +30,16 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
 
-public class IU_Accesos extends javax.swing.JFrame {
+public final class IU_Accesos extends javax.swing.JFrame {
 
     private static boolean ultimos;
-    File fichero = new File("./help_Accesos/help_set.hs");
     URL hsURL;
     HelpSet helpset;
+    String targetDefecto = "aplicacion", 
+           targetDefecto2 = "introduccion", 
+           hs1 = "./help_Accesos/help_set.hs",
+           hs2 = "./JavaHelp/ejemplo.hs";
+    File fichero = new File(hs1);
 
     public IU_Accesos() {
         initComponents();
@@ -296,7 +300,7 @@ public class IU_Accesos extends javax.swing.JFrame {
                 accesoPrueba.insertarAcceso(Integer.valueOf(cliente));
 
             } catch (ParseException ex) {
-                Logger.getLogger(NuevoAcceso.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(IU_Accesos.class.getName()).log(Level.SEVERE, null, ex);
             }
             refrescaTabla();
         }
@@ -324,43 +328,52 @@ public class IU_Accesos extends javax.swing.JFrame {
 
     private void btnInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeActionPerformed
         String rutaPlantilla = "./src/main/java/com/leonardo/GYM/informes/AccesosCliente.jrxml";
-
         Map parametros = new HashMap();
-
         JasperReport reporte;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conexion = (Connection) DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
 
-            parametros.put("idCliente", Integer.parseInt(lblId.getText()));
+        if (lblId.getText() == "") {
+            JOptionPane.showMessageDialog(this,
+                    "Tienes que buscar un cliente antes de imprimir un informe.",
+                    "Cliente no seleccionado",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conexion = (Connection) DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
 
-            reporte = (JasperReport) JasperCompileManager.compileReport(rutaPlantilla);
+                parametros.put("idCliente", Integer.parseInt(lblId.getText()));
 
-            JasperPrint miInforme = JasperFillManager.fillReport(reporte, parametros, conexion);
+                reporte = (JasperReport) JasperCompileManager.compileReport(rutaPlantilla);
 
-            JasperViewer.viewReport(miInforme, false);
+                JasperPrint miInforme = JasperFillManager.fillReport(reporte, parametros, conexion);
 
-        } catch (ClassNotFoundException e) {
-            System.out.print("Error driver");
-        } catch (SQLException e) {
-            System.out.print("Error sentencia SQL");
-        } catch (JRException ex) {
-            Logger.getLogger(IU_Accesos.class.getName()).log(Level.SEVERE, null, ex);
+                JasperViewer.viewReport(miInforme, false);
+
+            } catch (ClassNotFoundException e) {
+                System.out.print("Error driver");
+            } catch (SQLException e) {
+                System.out.print("Error sentencia SQL");
+            } catch (JRException ex) {
+                Logger.getLogger(IU_Accesos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }//GEN-LAST:event_btnInformeActionPerformed
-    public void ayuda() {
 
+
+    }//GEN-LAST:event_btnInformeActionPerformed
+    
+    public void ayuda() {
         try {
             hsURL = fichero.toURI().toURL();
-
+            
             try {
                 // Crea el HelpSet y el HelpBroker
                 helpset = new HelpSet(getClass().getClassLoader(), hsURL);
                 HelpBroker hb = helpset.createHelpBroker();
                 // Pone ayuda al botón y a F1 en la ventana.
-                hb.enableHelpOnButton(btnAyuda, "aplicacion", helpset);
+               
+                hb.enableHelpOnButton(btnAyuda, targetDefecto2, helpset);
                 //F1
-                hb.enableHelpKey(this.getContentPane(), "aplicacion", helpset);
+                hb.enableHelpKey(this.getContentPane(), targetDefecto2, helpset);
 
             } catch (HelpSetException ex) {
                 Logger.getLogger(IU_Accesos.class.getName()).log(Level.SEVERE, null, ex);
@@ -459,7 +472,7 @@ public class IU_Accesos extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTable tblAccesos;
     // End of variables declaration//GEN-END:variables
-    private NuevoAcceso dlgNewAccess;
+
     private MenuSeleccion menu;
 }
 

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--TABLA DE CONTENIDOS-->
 <toc version="1.0">
-	<tocitem text="Tarea JavaHelp" target="aplicacion">
+	<tocitem text="Ayuda de Accesos" target="introduccion">
 		<tocitem text="Introducir acceso" target="introducir_Acceso"/>
 		<tocitem text="Ultimo accesos" target="ultimos"/>
-		<tocitem text="Fichero mapa" target="fichero_mapa"/>
-		<tocitem text="Tabla de contenidos" target="tabla_contenidos"/>
-		<tocitem text="Fichero indice" target="fichero_indice"/>
-		<tocitem text="Fichero principal" target="fichero_principal"/>
-		<tocitem text="Codigo java a añadir" target="codigo_java"/>
+		<tocitem text="Busqueda de clientes." target="busqueda"/>
+		<tocitem text="Impresión de Informe." target="imprimir"/>
 	</tocitem>
+		
 </toc>
