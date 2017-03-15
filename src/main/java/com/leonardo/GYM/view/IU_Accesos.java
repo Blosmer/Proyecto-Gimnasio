@@ -5,6 +5,8 @@ import com.leonardo.GYM.model.AccesoModel;
 //import com.leonardo.GYM.model.ModeloTabla;
 import com.leonardo.gym.model.ClienteModel;
 import com.mysql.jdbc.Connection;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,6 +21,8 @@ import java.util.logging.Logger;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.help.HelpSetException;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -35,10 +39,10 @@ public final class IU_Accesos extends javax.swing.JFrame {
     private static boolean ultimos;
     URL hsURL;
     HelpSet helpset;
-    String targetDefecto = "aplicacion", 
-           targetDefecto2 = "introduccion", 
-           hs1 = "./help_Accesos/help_set.hs",
-           hs2 = "./JavaHelp/ejemplo.hs";
+    String targetDefecto = "aplicacion",
+            targetDefecto2 = "introduccion",
+            hs1 = "./help_Accesos/help_set.hs",
+            hs2 = "./JavaHelp/ejemplo.hs";
     File fichero = new File(hs1);
 
     public IU_Accesos() {
@@ -65,7 +69,7 @@ public final class IU_Accesos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAccesos = new javax.swing.JTable();
         imgFoto = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        lblFoto = new javax.swing.JLabel();
         btnBusqueda = new javax.swing.JButton();
         lblId = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
@@ -114,17 +118,17 @@ public final class IU_Accesos extends javax.swing.JFrame {
 
         imgFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Guy_Incognito.png"))); // NOI18N
+        lblFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Guy_Incognito.png"))); // NOI18N
 
         javax.swing.GroupLayout imgFotoLayout = new javax.swing.GroupLayout(imgFoto);
         imgFoto.setLayout(imgFotoLayout);
         imgFotoLayout.setHorizontalGroup(
             imgFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         imgFotoLayout.setVerticalGroup(
             imgFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         btnBusqueda.setText("Busqueda Cliente");
@@ -319,10 +323,11 @@ public final class IU_Accesos extends javax.swing.JFrame {
             String idCliTabla = (String) tblAccesos.getModel().getValueAt(filaSeleccionada, 3);
             String nombreCliTabla = (String) tblAccesos.getModel().getValueAt(filaSeleccionada, 4);
             String apellidoCliTabla = (String) tblAccesos.getModel().getValueAt(filaSeleccionada, 5);
-
+            
             lblId.setText(idCliTabla);
             lblNombre.setText(nombreCliTabla);
             lblApellidos.setText(apellidoCliTabla);
+            refrescaTabla();
         }
     }//GEN-LAST:event_tblAccesosMouseClicked
 
@@ -360,17 +365,17 @@ public final class IU_Accesos extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnInformeActionPerformed
-    
+
     public void ayuda() {
         try {
             hsURL = fichero.toURI().toURL();
-            
+
             try {
                 // Crea el HelpSet y el HelpBroker
                 helpset = new HelpSet(getClass().getClassLoader(), hsURL);
                 HelpBroker hb = helpset.createHelpBroker();
                 // Pone ayuda al botón y a F1 en la ventana.
-               
+
                 hb.enableHelpOnButton(btnAyuda, targetDefecto2, helpset);
                 //F1
                 hb.enableHelpKey(this.getContentPane(), targetDefecto2, helpset);
@@ -412,6 +417,11 @@ public final class IU_Accesos extends javax.swing.JFrame {
         ArrayList<AccesoModel> arrayAccesos = ac.getAccesosCliente(Integer.parseInt(lblId.getText()));
 
         for (AccesoModel accesoIt : arrayAccesos) {
+            if(accesoIt.getFotoCliente()!=null){
+                lblFoto.setIcon(accesoIt.getFotoCliente()); 
+            }else{
+                lblFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Guy_Incognito.png")));
+            }       
             mlt.addRow(accesoIt.toArrayStringClientes());
         }
         //tblAccesos.setModel(dtm);
@@ -443,6 +453,7 @@ public final class IU_Accesos extends javax.swing.JFrame {
         lblId.setText("");
         lblNombre.setText("");
         lblApellidos.setText("");
+        lblFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Guy_Incognito.png")));
     }
 
     public static void main(String args[]) {
@@ -461,13 +472,13 @@ public final class IU_Accesos extends javax.swing.JFrame {
     private javax.swing.JButton btnUltimos;
     private javax.swing.JPanel imgFoto;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblApellidos;
+    private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTable tblAccesos;
