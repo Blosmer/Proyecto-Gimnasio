@@ -2,6 +2,8 @@ package com.leonardo.GYM.dao;
 
 import com.leonardo.GYM.model.AccesoModel;
 import com.leonardo.GYM.view.IU_Accesos;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -12,12 +14,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-public class AccesosDao{
+public class AccesosDao {
 
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    
+
     public AccesosDao() {
     }
 
@@ -27,15 +30,17 @@ public class AccesosDao{
             Connection conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
             Statement sentencia = conexion.createStatement();
 
-            Date date = new Date();
-            Date ultimaFecha;
-            
-            int tipo;
+            Date date = new Date(); //fecha actual
+            Date ultimaFecha; //fecha del ultimo acceso
 
+            int tipo; //entrada o salida
+
+            //Consulta del ultimo acceso
             String sqlTipo = String.format("SELECT fechahora, tipo FROM Accesos "
                     + "WHERE id_cliente = %s ORDER BY id_acceso DESC LIMIT 1", idCliente);
             ResultSet resultTipo = sentencia.executeQuery(sqlTipo);
 
+            //Comprueba si es el primer acceso
             if (resultTipo.isBeforeFirst()) {
                 resultTipo.next();
                 ultimaFecha = dateFormat.parse(resultTipo.getString(1));
@@ -54,14 +59,13 @@ public class AccesosDao{
                     dateFormat.format(date), idCliente);
             //System.out.println(sql);
 
-            if (date.getTime() - ultimaFecha.getTime() < (10000) && 
-                    date.getTime() - ultimaFecha.getTime() > 0) {
-                
-                
+            //El seguro de 10 segundos entre accesos
+            if (date.getTime() - ultimaFecha.getTime() < (10000)
+                    && date.getTime() - ultimaFecha.getTime() > 0) {
+
                 /*JOptionPane.showMessageDialog(IU_Accesos.class, 
                         "Ha introducido 2 accesos muy rapido.", 
                         "Acceso continuo", JOptionPane.ERROR_MESSAGE);*/
-                
                 System.out.println("Esperate 10 segundos para pasar la tarjetita");
             } else {
                 sentencia.executeUpdate(sql);
@@ -75,7 +79,7 @@ public class AccesosDao{
             e.printStackTrace();
         }
     }
-    
+
     public ArrayList<AccesoModel> getAccesosCliente(int idCliente) {
         ArrayList<AccesoModel> listaAccesos = new ArrayList<>();
         AccesoModel acceso;
@@ -83,11 +87,19 @@ public class AccesosDao{
             Class.forName("com.mysql.jdbc.Driver");
             Connection conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
             Statement sentencia = conexion.createStatement();
-            ResultSet rs = sentencia.executeQuery("SELECT * FROM Accesos where id_cliente= " + idCliente);
+            ResultSet rs = sentencia.executeQuery("SELECT a.*, cl.imagen FROM Accesos a left join Clientes cl "
+                    + "ON a.id_cliente=cl.id_cliente" + " where cl.id_cliente= " + idCliente);
 
+            byte[] imagen = null;
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     acceso = new AccesoModel();
+                    imagen = rs.getBytes("cl.imagen");
+                    if (imagen != null) {
+                        Image img = Toolkit.getDefaultToolkit().createImage(imagen);
+                        ImageIcon icon = new ImageIcon(img);
+                        acceso.setFotoCliente(icon);
+                    }
                     acceso.setIdAcceso(rs.getByte("id_acceso"));
                     acceso.setTipo(rs.getString("tipo"));
                     acceso.setFechaHora(rs.getString("fechahora"));
@@ -108,7 +120,7 @@ public class AccesosDao{
         }
         return listaAccesos;
     }
-    
+
     public ArrayList<AccesoModel> getUltimosAccesos() {
         ArrayList<AccesoModel> listaAccesos = new ArrayList<>();
         AccesoModel acceso;
@@ -116,9 +128,9 @@ public class AccesosDao{
             Class.forName("com.mysql.jdbc.Driver");
             Connection conexion = DriverManager.getConnection("jdbc:mysql://db4free.net:3307/gimnasio", "davinci", "dam2davinci");
             Statement sentencia = conexion.createStatement();
-            ResultSet rs = sentencia.executeQuery("SELECT a.*, cl.nombre, cl.apellidos FROM Accesos a left join Clientes cl \n" +
-                                                        "ON a.id_cliente=cl.id_cliente\n" +
-                                                        "ORDER BY id_acceso DESC LIMIT 20");
+            ResultSet rs = sentencia.executeQuery("SELECT a.*, cl.nombre, cl.apellidos FROM Accesos a left join Clientes cl \n"
+                    + "ON a.id_cliente=cl.id_cliente\n"
+                    + "ORDER BY id_acceso DESC LIMIT 20");
 
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
