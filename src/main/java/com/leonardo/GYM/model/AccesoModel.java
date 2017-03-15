@@ -5,7 +5,10 @@
  */
 package com.leonardo.GYM.model;
 
+import java.awt.Image;
+import java.sql.Blob;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -15,6 +18,19 @@ public class AccesoModel {
 
     private int idAcceso, idCliente;
     private String tipo, fechaHora, nombreCliente, apellidosCliente;
+    private ImageIcon fotoCliente;
+
+    public AccesoModel() {
+
+    }
+
+    public ImageIcon getFotoCliente() {
+        return fotoCliente;
+    }
+
+    public void setFotoCliente(ImageIcon fotoCliente) {
+        this.fotoCliente = fotoCliente;
+    }
 
     public String getNombreCliente() {
         return nombreCliente;
@@ -30,10 +46,6 @@ public class AccesoModel {
 
     public void setApellidosCliente(String apellidosCliente) {
         this.apellidosCliente = apellidosCliente;
-    }
-
-    public AccesoModel() {
-
     }
 
     public int getIdAcceso() {
@@ -108,8 +120,8 @@ public class AccesoModel {
         s[3] = String.valueOf(idCliente);
         s[4] = nombreCliente;
         s[5] = apellidosCliente;
-        */
-        
+         */
+
         return v;
     }
 }
